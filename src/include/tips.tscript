@@ -1,0 +1,22 @@
+// ===========================================================================
+// Game tipz 'n trickz
+// ===========================================================================
+
+#define TIP_TAKE 1
+
+container Tips
+{
+	init()
+	{
+		tip_seen = [];
+	}
+
+	function show(id, message)
+	{
+		if (ListContains(tip_seen, id))
+			return false;
+		ListAdd(tip_seen, id);
+		textln("(TIP: " + message + ")");
+	}
+
+}

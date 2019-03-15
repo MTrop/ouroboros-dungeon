@@ -1,0 +1,129 @@
+
+// ============================================================
+// Rooms
+// ============================================================
+
+room archetype r_allrooms
+{
+	function OnRoomEntered()
+	{
+		// Override me.
+		textln(strformat("[ENTERED [0]]", [identity(this)]));
+	}
+
+	function OnRoomFirstVisit()
+	{
+		// Override me.
+		textln(strformat("[FIRST VISIT [0]]", [identity(this)]));
+	}
+
+	function OnLookAround()
+	{
+		// Override me.
+		textln(strformat("[IT LOOKS LIKE [0]]", [identity(this)]));
+	}
+
+	onAction(a_lookaround)
+	{
+		OnLookAround();
+	}
+
+	onAction(a_visit)
+	{
+		OnRoomEntered();
+		if (!_visited)
+		{
+			OnRoomFirstVisit();
+			OnLookAround();
+		}
+		_visited = true;
+	}
+
+}
+
+room r_intro : r_allrooms;
+room r_startingroom : r_allrooms;
+
+// ============================================================
+// Objects
+// ============================================================
+
+// Every object does this stuff.
+object archetype o_allobjects
+{
+	function InitTags()
+	{
+		// Override me.
+	}
+
+	init()
+	{
+		InitTags();
+	}
+
+}
+
+// Examinable objects.
+object archetype o_examineable : o_allobjects
+{
+	function OnExamineFirst()
+	{
+		// Override me.
+	}
+
+	function OnExamineNext()
+	{
+		// Override me.
+	}
+
+	function OnExamineEvery()
+	{
+		// Override me.
+	}
+
+	onAction(a_examine)
+	{
+		if (!_examined)
+			OnExamineFirst();
+		else
+			OnExamineNext();
+		OnExamineEvery();
+		_examined = true;
+	}
+
+}
+
+// Objects that can be taken.
+object archetype o_takeable : o_examineable
+{
+	override function InitTags()
+	{
+		AddObjectTag(this, "takeable");
+	}
+
+	function OnTake()
+	{
+		textln("You take it.");
+		Tips.show(TIP_TAKE, 
+			"You now have something in your inventory - "+
+			"you will have to \"LOOK AT\" or \"EXAMINE\" it to see what you have."
+		);
+	}
+
+	function OnAlreadyHave()
+	{
+		textln("You already have it.");
+	}
+
+	onAction(a_take)
+	{
+		if (HasObject(player, this))
+			OnAlreadyHave();
+		else
+		{
+			GiveObject(player, this);
+			OnTake();
+		}
+	}
+
+}

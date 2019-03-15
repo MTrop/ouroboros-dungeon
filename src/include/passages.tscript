@@ -1,0 +1,19 @@
+// ===========================================================================
+// Passages of text that are for flavor that I need to write better.
+// ===========================================================================
+
+container Passages
+{
+	function IntroSplash()
+	{
+		textln(strformat("\"[0]\" by [1]", [header("title"), header("author")]));
+		textln("Made with TAME (https://tame-if.com) for Train Jam 2019");
+		textln("");
+		pause();
+	}
+
+	function IntroText()
+	{
+		textln("You encounter a hastily-written plot and fell in a hole and now you are in a dungeon.");
+	}
+}

@@ -1,0 +1,28 @@
+
+extend room r_intro
+{
+	override function OnRoomEntered()
+	{
+		Passages.IntroSplash();
+	}
+
+	override function OnRoomFirstVisit()
+	{
+		Passages.IntroText();
+	}
+
+	override function OnLookAround()
+	{
+		// Nothing!
+	}
+
+	// Called to just move to the start.
+	onAction(a_gosouth)
+	{
+		SetRoom(player, r_startingroom);
+	}
+}
+
+extend room r_startingroom
+{
+}

@@ -1,0 +1,57 @@
+/*****************************************************************************
+ * Just a Door
+ * By Matthew Tropiano 2019
+ * For Train Jam 2019 - Theme: "Circuitous"
+ ****************************************************************************/
+
+module
+{
+	title = "Just a Door";
+	author = "Matthew Tropiano";
+	twitter = "@TheRealMTrop";
+	email = "mtropiano@gmail.com";
+}
+
+#include "include/passages.tscript"
+#include "include/tips.tscript"
+#include "include/actions.tscript"
+#include "include/prototypes.tscript"
+#include "include/objects.tscript"
+#include "include/player.tscript"
+#include "include/rooms.tscript"
+
+world
+{
+	onAction(a_cheat)
+	{
+		textln("Nice try, buddy.");
+	}
+
+	onAction(a_cheatdoom)
+	{
+		textln("Not that kind of game, dude.");
+	}
+
+	onAction(a_realcheat)
+	{
+		textln("You have EVERYTHING!");
+		// TODO: Finish this.
+		browse(player);
+	}
+
+	start()
+	{
+		setRoom(p_main, r_intro);
+		setPlayer(p_main);
+
+		queue a_visit;
+		queue a_gosouth;
+		queue a_visit;
+	}
+
+	afterSuccessfulCommand()
+	{
+		queue a_visit;
+	}
+
+}
