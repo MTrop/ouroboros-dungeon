@@ -22,6 +22,11 @@ module
 
 world
 {
+	init()
+	{
+		lastroom = false;
+	}
+
 	onAction(a_cheat)
 	{
 		textln("Nice try, buddy.");
@@ -47,11 +52,21 @@ world
 		queue a_visit;
 		queue a_gosouth;
 		queue a_visit;
+		queue a_setlastroom;
+	}
+
+	onAction(a_setlastroom)
+	{
+		lastroom = identity(room);
 	}
 
 	afterSuccessfulCommand()
 	{
-		queue a_visit;
+		if (lastroom != identity(room))
+		{
+			queue a_visit;
+			queue a_setlastroom;
+		}
 	}
 
 }

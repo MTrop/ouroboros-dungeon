@@ -11,21 +11,22 @@ room archetype r_allrooms
 		textln(strformat("[ENTERED [0]]", [identity(this)]));
 	}
 
-	function OnRoomFirstVisit()
-	{
-		// Override me.
-		textln(strformat("[FIRST VISIT [0]]", [identity(this)]));
-	}
-
 	function OnLookAround()
 	{
 		// Override me.
 		textln(strformat("[IT LOOKS LIKE [0]]", [identity(this)]));
 	}
 
+	function OnFirstVisit()
+	{
+		// Override me.
+		textln(strformat("[FIRST VISIT [0]]", [identity(this)]));
+	}
+
 	onAction(a_lookaround)
 	{
 		OnLookAround();
+		Browse(room);
 	}
 
 	onAction(a_visit)
@@ -33,8 +34,9 @@ room archetype r_allrooms
 		OnRoomEntered();
 		if (!_visited)
 		{
-			OnRoomFirstVisit();
 			OnLookAround();
+			OnFirstVisit();
+			Browse(room);
 		}
 		_visited = true;
 	}
@@ -106,7 +108,7 @@ object archetype o_takeable : o_examineable
 		textln("You take it.");
 		Tips.show(TIP_TAKE, 
 			"You now have something in your inventory - "+
-			"you will have to \"LOOK AT\" or \"EXAMINE\" it to see what you have."
+			"you will have to \"LOOK AT\" or \"EXAMINE\" your inventory to see what you have."
 		);
 	}
 

@@ -17,7 +17,7 @@ action ditransitive a_use named "use", "u" uses conjunctions "with", "and";
 // For automatic stuff.
 
 action general a_visit;
-action general a_gointro;
+action general a_setlastroom;
 
 // SPECIAL
 
