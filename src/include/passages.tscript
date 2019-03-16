@@ -6,7 +6,7 @@ container Passages
 {
 	function IntroSplash()
 	{
-		textln(strformat("\"[0]\" by [1]", [header("title"), header("author")]));
+		textln(strformat("\"[0]\" by [1] ([2])", [header("title"), header("author"), header("twitter")]));
 		textln("Made with TAME (https://tame-if.com) for Train Jam 2019");
 		textln("");
 		pause();
@@ -20,4 +20,22 @@ container Passages
 		pause();
 		textln("");
 	}
+
+	function BackToStart()
+	{
+		textln("Wait, what? WHAAAAT?");
+		textln("Are you KIDDING ME?");
+		textln("You mean you went all this way for some fetch quests and now you're back HERE?");
+		textln("What the HELL, MAN?!");
+		textln("The whole thing's a damn circle! How the hell will you EVER get out, now?!");
+		textln("...");
+		textln("You feel like PUNCHing something....");
+	}
+
+	function YouWin()
+	{
+		textln("[YOU WIN]");
+		textln("");
+	}
+
 }

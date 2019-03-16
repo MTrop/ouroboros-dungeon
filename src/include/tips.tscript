@@ -2,22 +2,35 @@
 // Game tipz 'n trickz
 // ===========================================================================
 
-#define TIP_TAKE 1
-#define TIP_LOOKAT 2
+#define TIP_TAKE 0 
+#define TIP_INVENTORY 1
+#define TIP_LOOKAROUND 2
+#define TIP_LOOKAT 3
+#define TIP_GO 4
+#define TIP_GOSHORT 5
+#define COUNT_TIP 6
 
 container Tips
 {
 	init()
 	{
-		tip_seen = [];
+		tip_seen = ListNew(COUNT_TIP);
+		tip_list = [
+			"You can \"TAKE\" items with you. They might be useful later!",
+			"You now have something in your inventory - you will have to type \"INVENTORY\" to see what you have.",
+			"You seem to have been here before! You will have to \"LOOK AROUND\" to re-examine your surroundings.",
+			"You can \"EXAMINE\" things more closely for a better description.",
+			"To move around, type \"GO\" and a compass direction.",
+			"If you're sick of typing \"GO EAST\" or whatever, you can just type \"N\", \"S\", \"E\", or \"W\" to go that direction."
+		];
 	}
 
-	function show(id, message)
+	function show(id)
 	{
-		if (ListContains(tip_seen, id))
+		if (tip_seen[id])
 			return false;
-		ListAdd(tip_seen, id);
-		textln("(TIP: " + message + ")");
+		tip_seen[id] = true;
+		textln("(TIP: " + tip_list[id] + ")");
 	}
 
 }

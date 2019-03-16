@@ -16,18 +16,47 @@ extend room r_intro
 		Passages.IntroText();
 	}
 
+	override function OnReVisit()
+	{
+		// Should not happen.
+	}
+
 	// Called to just move to the start.
 	onAction(a_gosouth)
 	{
-		SetRoom(player, r_startingroom);
+		SetRoom(player, r_northwestroom);
 	}
 }
 
-extend room r_startingroom
+extend room r_northwestroom
 {
+	init()
+	{
+		GiveObject(this, o_exitdoor);
+		GiveObject(this, o_exitdoorplacard);
+		GiveObject(this, o_ouroboros);
+	}
+
 	override function OnRoomEntered()
 	{
 		textln("You are in the starting room.\n");
+		if (world.cycled)
+		{
+			wait(1000);
+			textln("...");
+			wait(1000);
+			Passages.BackToStart();
+		}
+
+	}
+
+	override function OnFirstVisit()
+	{
+		textln(
+			"Ugh. You're really sore from the fall. Who the heck puts a makeshift " +
+			"dungeon all the way out here, anyway? That lingering mildewy small doesn't " +
+			"help things, either."
+		);
 	}
 
 	override function OnLookAround()
@@ -36,17 +65,356 @@ extend room r_startingroom
 			"The room is cramped and damp. It must not have been exposed to " +
 			"the outside world in quite a while."
 		);
+		textln("....Well, until YOU came along at least!");
 		textln("");
-		textln("Well, until YOU came along at least!");
-		textln("");
+		Tips.Show(TIP_LOOKAT);
+	}
+
+	override function OnReVisit()
+	{
+		Tips.show(TIP_LOOKAROUND);
+		if (o_floorplate.used)
+			Tips.Show(TIP_TAKE);
+	}
+
+	override function OnDirections()
+	{
+		textln("It looks like you can GO SOUTH from here.");
+		Tips.Show(TIP_GO);
+	}
+
+	onAction(a_gosouth)
+	{
+		SetRoom(player, r_westroom);
+	}
+
+	onAction(a_goeast)
+	{
+		if (!world.cycled)
+			textln("You can't go that way.");
+		else
+			SetRoom(player, r_northroom);
+	}
+
+}
+
+extend room r_westroom
+{
+	init()
+	{
+		GiveObject(this, o_floorplate);
+		GiveObject(this, o_irondoor);
+	}
+
+	onAction(a_gonorth)
+	{
+		SetRoom(player, r_northwestroom);
+	}
+
+	onAction(a_gosouth)
+	{
+		if (HasObject(this, o_irondoor))
+			textln("You can't - an iron door blocks the way.");
+		else
+			SetRoom(player, r_southwestroom);
+	}
+
+	override function OnRoomEntered()
+	{
+		textln("You are in the west room.");
 	}
 
 	override function OnFirstVisit()
 	{
-		textln(
-			"Ugh. You're really sore from the fall. Who the heck puts a makeshift " +
-			"dungeon all the way out here, anyway?"
-		);
+		textln("It's kinda chilly in here.");
 	}
 
+	override function OnLookAround()
+	{
+		if (HasObject(this, o_irondoor))
+			textln("It's a pretty bare room, save for a single iron door.");
+		else
+			textln("It's a pretty bare room, save for the iron door, which is not there, anymore.");
+	}
+
+	override function OnReVisit()
+	{
+		textln("It's still kinda chilly in here.");
+	}
+
+	override function OnDirections()
+	{
+		if (HasObject(this, o_irondoor))
+			textln("You can GO NORTH from here. An iron door blocks the way south.");
+		else
+			textln("You can GO NORTH or SOUTH from here.");
+	}
+
+}
+
+extend room r_southwestroom
+{
+	init()
+	{
+		// add items
+	}
+
+	onAction(a_gonorth)
+	{
+		SetRoom(player, r_westroom);
+	}
+
+	onAction(a_goeast)
+	{
+		SetRoom(player, r_southroom);
+	}
+
+	override function OnRoomEntered()
+	{
+		textln(identity(this));
+		// TODO: Finish.
+	}
+
+	override function OnFirstVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnLookAround()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnReVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnDirections()
+	{
+		// TODO: Finish.
+	}
+
+}
+
+extend room r_southroom
+{
+	init()
+	{
+		// add items
+	}
+
+	onAction(a_gowest)
+	{
+		SetRoom(player, r_southwestroom);
+	}
+
+	onAction(a_goeast)
+	{
+		SetRoom(player, r_southeastroom);
+	}
+
+	override function OnRoomEntered()
+	{
+		textln(identity(this));
+		// TODO: Finish.
+	}
+
+	override function OnFirstVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnLookAround()
+	{
+		// TODO: Finish.
+		Tips.Show(TIP_GOSHORT);
+	}
+
+	override function OnReVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnDirections()
+	{
+		// TODO: Finish.
+	}
+}
+
+extend room r_southeastroom
+{
+	init()
+	{
+		// add items
+	}
+
+	onAction(a_gowest)
+	{
+		SetRoom(player, r_southroom);
+	}
+
+	onAction(a_gonorth)
+	{
+		SetRoom(player, r_eastroom);
+	}
+
+	override function OnRoomEntered()
+	{
+		textln(identity(this));
+		// TODO: Finish.
+	}
+
+	override function OnFirstVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnLookAround()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnReVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnDirections()
+	{
+		// TODO: Finish.
+	}
+}
+
+extend room r_eastroom
+{
+	init()
+	{
+		// add items
+	}
+
+	onAction(a_gonorth)
+	{
+		SetRoom(player, r_northeastroom);
+	}
+
+	onAction(a_gosouth)
+	{
+		SetRoom(player, r_southeastroom);
+	}
+
+	override function OnRoomEntered()
+	{
+		textln(identity(this));
+		// TODO: Finish.
+	}
+
+	override function OnFirstVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnLookAround()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnReVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnDirections()
+	{
+		// TODO: Finish.
+	}
+}
+
+extend room r_northeastroom
+{
+	init()
+	{
+		// add items
+	}
+
+	onAction(a_gowest)
+	{
+		SetRoom(player, r_northroom);
+	}
+
+	onAction(a_gosouth)
+	{
+		SetRoom(player, r_eastroom);
+	}
+
+	override function OnRoomEntered()
+	{
+		textln(identity(this));
+		// TODO: Finish.
+	}
+
+	override function OnFirstVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnLookAround()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnReVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnDirections()
+	{
+		// TODO: Finish.
+	}
+}
+
+extend room r_northroom
+{
+	init()
+	{
+		// add items
+	}
+
+	onAction(a_gowest)
+	{
+		SetRoom(player, r_northwestroom);
+		world.cycled = true;
+	}
+
+	onAction(a_goeast)
+	{
+		SetRoom(player, r_northeastroom);
+	}
+
+	override function OnRoomEntered()
+	{
+		textln(identity(this));
+		// TODO: Finish.
+	}
+
+	override function OnFirstVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnLookAround()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnReVisit()
+	{
+		// TODO: Finish.
+	}
+
+	override function OnDirections()
+	{
+		// TODO: Finish.
+	}
 }

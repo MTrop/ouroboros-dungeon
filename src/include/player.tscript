@@ -4,6 +4,11 @@
 
 player p_main
 {
+	init()
+	{
+		GiveObject(this, o_compass);
+	}
+
 	onAction(a_inventory)
 	{
 		textln("You examine your belongings....");
@@ -41,13 +46,24 @@ player p_main
 		CantGo();
 	}
 
+	onUnhandledAction(a_punch)
+	{
+		local x = irandom(3);
+		if (x == 0)
+			textln("That could mess up your knuckles.");
+		else if (x == 1)
+			textln("Probably not a good idea.");
+		else if (x == 2)
+			textln("That'll probably hurt.");
+	}
+
 	onUnhandledAction()
 	{
 		local x = irandom(3);
 		if (x == 0)
 			textln("You can't do that.");
 		else if (x == 1)
-			textln("That's not a thing you can do.");
+			textln("That wouldn't be productive.");
 		else if (x == 2)
 			textln("Nope, can't do that.");
 	}
@@ -110,6 +126,11 @@ player p_main
 	onAmbiguousCommand()
 	{
 		textln("(There are many things here that can be described that way. Be more specific.)");
+	}
+
+	onUnknownCommand()
+	{
+		textln("That is not a thing you can do.");
 	}
 
 }

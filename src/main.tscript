@@ -1,12 +1,12 @@
 /*****************************************************************************
- * Just a Door
+ * Ouroboro's Dungeon
  * By Matthew Tropiano 2019
  * For Train Jam 2019 - Theme: "Circuitous"
  ****************************************************************************/
 
 module
 {
-	title = "Just a Door";
+	title = "Ouroboros's Dungeon";
 	author = "Matthew Tropiano";
 	twitter = "@TheRealMTrop";
 	email = "mtropiano@gmail.com";

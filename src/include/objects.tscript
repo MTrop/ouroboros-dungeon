@@ -1,0 +1,298 @@
+extend object o_compass
+{
+	onPlayerBrowse()
+	{
+		textln("A compass.");
+	}
+
+	override function OnExamineFirst()
+	{
+		textln("Your compass. Pretty handy for filling important plot holes, for instance, how you "+
+		"know which direction everything is in. If only it filled the hole that you fell in moments ago.");
+	}
+
+	override function OnExamineNext()
+	{
+		textln("It's your compass.");
+	}
+
+	onAction(a_use)
+	{
+		textln("Technically, you're constantly using it. It's helping you find your bearings!");
+	}
+
+}
+
+extend object o_exitdoor
+{
+	onElementBrowse(r_northwestroom)
+	{
+		textln("There's a big door here, blocking the way north.");
+	}
+
+	override function OnExamineFirst()
+	{
+		GiveObject(room, o_exitdoorplacard);
+		GiveObject(room, o_exitdoorkeyhole);
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a big door with a shiny placard on it, and a big keyhole.");
+	}
+
+	onActionWith(a_use, o_exitkey)
+	{
+		Passages.YouWin();
+		quit;
+	}
+
+	function _use()
+	{
+		if (usedonce)
+			textln("It's still locked.");
+		else
+			textln("You pull with all your might, but it doesn't budge. Looks like it's locked.");
+		usedonce = true;
+	}
+
+	onAction(a_use)
+	{
+		_use();
+	}
+
+	onAction(a_open)
+	{
+		_use();
+	}
+
+}
+
+extend object o_exitdoorplacard
+{
+	override function OnExamineFirst()
+	{
+		textln("It reads, \"Those who chase their tails are not necessarily lost.\" What the hell does that even mean?!");
+	}
+
+	override function OnExamineNext()
+	{
+		textln("\"Those who chase their tails are not necessarily lost.\" Ugh. Whoever wrote this was just trying to sound smart.");
+	}
+}
+
+extend object o_exitdoorkeyhole
+{
+	override function OnExamineFirst()
+	{
+		textln("You peer through the keyhole. Hey - there's light through there! This must be the door to the outside!");
+	}
+
+	override function OnExamineNext()
+	{
+		textln("Through this door is freedom. Now to find the key.");
+	}
+
+	onActionWith(a_use, o_exitkey)
+	{
+		queue a_use, o_exitdoor, o_exitkey;
+	}
+
+}
+
+extend object o_ouroboros
+{
+	onElementBrowse(r_northwestroom)
+	{
+		if (!_examined)
+			textln("There is a painting of some kind of snake eating its tail hanging on the west wall.");
+		else
+			textln("There is a painting of an Ouroboros hanging on the west wall.");
+		if (world.cycled)
+			textln("Looking at it makes you ANGRY.");
+	}
+
+	override function OnExamineFirst()
+	{
+		textln("It's an old, wood-framed oil-on-canvas painting of a snake encircling an eye, such that its head meets "+
+		"its tail, its mouth agape like it was going to eat it.");
+		textln("A tiny plaque on the bottom part of the painting reads,");
+		textln("\nOUROBOROS - The snake that eats itself.\n");
+		
+		AddObjectName(this, "ouroboros");
+		AddObjectName(this, "ouroboros painting");
+		AddObjectName(this, "painting of ouroboros");
+		AddObjectName(this, "painting of an ouroboros");
+	}
+
+	override function OnExamineNext()
+	{
+		if (world.cycled)
+			textln("It's the painting of an Ouroboros. You're so mad, you could PUNCH it!");
+		else
+			textln("It's the painting of an Ouroboros. Ominous.");
+	}
+
+	onAction(a_punch)
+	{
+		if (world.cycled)
+		{
+			textln("Using all your guts and grit and maybe a third word that begins with \"G\" that the "+
+			"author was too lazy to think of, you go to plunge your fist into the painting...");
+			wait(1000);
+			textln("... and it gives. What?");
+			pause();
+			textln("You feel a place in the wall behind the painting that was dug away.");
+			textln("You move your hand around a bit, and you feel something heavy and cold.");
+			pause();
+			textln("You pull it out of the hole you made in the painting. IT'S A KEY!");
+			textln("You take the Big Key.");
+			GiveObject(player, o_exitkey);
+			RemoveObject(o_ouroboros);
+			GiveObject(room, o_punchedouroboros);
+			punched = true;
+		}
+		else
+			textln("Why ruin a perfectly good painting?");
+	}
+
+}
+
+extend object o_punchedouroboros
+{
+	onElementBrowse(r_northwestroom)
+	{
+		if (!o_ouroboros._examined && !_examined)
+			textln("There is a punched painting of some kind of snake eating its tail hanging on the west wall.");
+		else
+			textln("There is a punched painting of an Ouroboros hanging on the west wall.");
+	}
+
+	override function OnExamineFirst()
+	{
+		textln("It's an old, wood-framed oil-on-canvas painting of a snake encircling an eye, such that its head meets "+
+		"its tail, its mouth agape like it was going to eat it.");
+		textln("A tiny plaque on the bottom part of the painting reads,");
+		textln("\nOUROBOROS - The snake that eats itself.\n");
+		textln("\"More like 'the snake that ate my fist,'\" you say out loud to nobody.");
+	}
+
+	override function OnExamineNext()
+	{
+		textln("It's the painting of an Ouroboros. Good riddance.");
+	}
+
+	onAction(a_punch)
+	{
+		textln("It's already punched. You think it learned its lesson.");
+	}
+
+}
+
+extend object o_exitkey
+{
+	onPlayerBrowse()
+	{
+		textln("A big key.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's the key to getting out of the damn place.");
+	}
+}
+
+extend object o_ironkey
+{
+	onRoomBrowse()
+	{
+		textln("There's a small iron key, here.");
+	}
+
+	onPlayerBrowse()
+	{
+		textln("A small iron key.");
+	}
+
+	override function OnExamineFirst()
+	{
+		textln("It's a small key made of iron. It's a little rusty, but then again, with your adventuring "+
+		"prowess, who are you to judge?");
+	}
+
+	override function OnExamineNext()
+	{
+		textln("It's a small key made of iron.");
+	}
+
+}
+
+action transitive a_stepon named "step on";
+
+extend object o_floorplate
+{
+	onRoomBrowse()
+	{
+		textln("There's some kind of a floorplate or slab protruding from the floor.");
+	}
+
+	onAction(a_stepon)
+	{
+		queue a_use, this;
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's some kind of a floorplate. Maybe it's attached to some kind of counterweight system?");
+	}
+
+	onAction(a_use)
+	{
+		textln("You step on the floor plate.");
+		if (!used)
+		{
+			textln("As it sinks, you hear something metallic hit the floor in the room to the NORTH of you.");
+			textln("You should probably GO there.");
+			GiveObject(r_northwestroom, o_ironkey);
+			used = true;
+		}
+		else
+		{
+			textln("Nothing happens.");
+		}
+	}
+
+}
+
+extend object o_irondoor
+{
+	onRoomBrowse()
+	{
+		textln("There's a big iron door, here.");
+	}
+
+	onAction(a_take)
+	{
+		textln("You may not have worked out in a while, but even if you did, you don't think you "+
+		"can take that door, much less carry it around with you.");
+		textln("\nBut your confidence is admirable.");
+	}
+
+	onAction(a_use)
+	{
+		textln("It's locked. You'll need a key to unlock it.");
+	}
+
+	onActionWith(a_use, o_ironkey)
+	{
+		RemoveObject(o_irondoor);
+		textln("You put the key into the door's keyhole, and it magically vanishes.");
+		textln("You are like, 95% percent sure doors don't do that, but whatever. It's not there, anymore.");
+	}
+
+	onAction(a_open)
+	{
+		queue a_use, this;
+	}
+
+}

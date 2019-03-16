@@ -1,6 +1,6 @@
 action general a_lookaround named "look", "examine surroundings", "l";
 action general a_takeall named "take all", "take everything";
-action general a_inventory named "look at inventory", "examine inventory", "inventory", "inv";
+action general a_inventory named "look at inventory", "examine my inventory", "examine inventory", "inventory", "inv";
 
 action general a_gowest named "go west", "w";
 action general a_goeast named "go east", "e";
@@ -10,9 +10,11 @@ action general a_gonorth named "go north", "n";
 action transitive a_take named "take", "pick up", "t";
 action transitive a_examine named "examine", "look at", "x";
 action transitive a_open named "open", "o";
+action transitive a_pull named "pull", "pull on";
+action transitive a_punch named "punch";
 
 action strict ditransitive a_ask named "ask" uses conjunctions "about";
-action ditransitive a_use named "use", "u" uses conjunctions "with", "and";
+action ditransitive a_use named "use", "u" uses conjunctions "with", "and", "on";
 
 // For automatic stuff.
 

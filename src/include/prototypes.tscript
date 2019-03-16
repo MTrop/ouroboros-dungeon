@@ -23,10 +23,28 @@ room archetype r_allrooms
 		textln(strformat("[FIRST VISIT [0]]", [identity(this)]));
 	}
 
-	onAction(a_lookaround)
+	function OnReVisit()
+	{
+		// Override me.
+		textln(strformat("[RE-VISIT [0]]", [identity(this)]));
+	}
+
+	function OnDirections()
+	{
+		// Override me.
+	}
+
+	function look()
 	{
 		OnLookAround();
 		Browse(room);
+		textln("");
+		OnDirections();
+	}
+
+	onAction(a_lookaround)
+	{
+		look();
 	}
 
 	onAction(a_visit)
@@ -34,9 +52,12 @@ room archetype r_allrooms
 		OnRoomEntered();
 		if (!_visited)
 		{
-			OnLookAround();
 			OnFirstVisit();
-			Browse(room);
+			look();
+		}
+		else
+		{
+			OnReVisit();			
 		}
 		_visited = true;
 	}
@@ -44,7 +65,14 @@ room archetype r_allrooms
 }
 
 room r_intro : r_allrooms;
-room r_startingroom : r_allrooms;
+room r_northwestroom : r_allrooms;
+room r_westroom : r_allrooms;
+room r_southwestroom : r_allrooms;
+room r_southroom : r_allrooms;
+room r_southeastroom : r_allrooms;
+room r_eastroom : r_allrooms;
+room r_northeastroom : r_allrooms;
+room r_northroom : r_allrooms;
 
 // ============================================================
 // Objects
@@ -61,6 +89,11 @@ object archetype o_allobjects
 	init()
 	{
 		InitTags();
+	}
+
+	onActionWithOther(a_use)
+	{
+		textln("You can't use those things together.");
 	}
 
 }
@@ -106,10 +139,7 @@ object archetype o_takeable : o_examineable
 	function OnTake()
 	{
 		textln("You take it.");
-		Tips.show(TIP_TAKE, 
-			"You now have something in your inventory - "+
-			"you will have to \"LOOK AT\" or \"EXAMINE\" your inventory to see what you have."
-		);
+		Tips.show(TIP_INVENTORY);
 	}
 
 	function OnAlreadyHave()
@@ -129,3 +159,43 @@ object archetype o_takeable : o_examineable
 	}
 
 }
+
+object o_compass : o_examineable
+	named "compass"
+	uses determiners "my", "the";
+
+object o_exitdoor : o_examineable 
+	named "big door", "door"
+	uses determiners "the"; 
+
+object o_exitdoorkeyhole : o_examineable 
+	named "keyhole", "big door keyhole", "big door's keyhole"
+	uses determiners "the"; 
+
+object o_exitdoorplacard : o_examineable
+	named "placard", "door placard", "shiny door placard", "shiny placard"
+	uses determiners "the";
+
+object o_exitkey : o_takeable 
+	named "big key", "key"
+	uses determiners "the";
+
+object o_floorplate : o_examineable 
+	named "slab", "floor plate", "floorplate", "plate"
+	uses determiners "the";
+
+object o_ouroboros : o_examineable 
+	named "painting", "painting of snake"
+	uses determiners "the";
+
+object o_punchedouroboros : o_examineable 
+	named "painting", "painting of snake"
+	uses determiners "the";
+
+object o_ironkey : o_takeable 
+	named "small iron key", "iron key", "key"
+	uses determiners "the";
+
+object o_irondoor : o_examineable
+	named "iron door", "door"
+	uses determiners "the";
