@@ -40,8 +40,9 @@ extend room r_northwestroom
 	override function OnRoomEntered()
 	{
 		textln("You are in the starting room.\n");
-		if (world.cycled)
+		if (world.cycled && !blurb)
 		{
+			blurb = true;
 			wait(1000);
 			textln("...");
 			wait(1000);
@@ -91,7 +92,7 @@ extend room r_northwestroom
 	onAction(a_goeast)
 	{
 		if (!world.cycled)
-			textln("You can't go that way.");
+			p_main.CantGo();
 		else
 			SetRoom(player, r_northroom);
 	}
@@ -135,6 +136,7 @@ extend room r_westroom
 			textln("It's a pretty bare room, save for a single iron door.");
 		else
 			textln("It's a pretty bare room, save for the iron door, which is not there, anymore.");
+		Tips.Show(TIP_USE);
 	}
 
 	override function OnReVisit()
@@ -156,7 +158,7 @@ extend room r_southwestroom
 {
 	init()
 	{
-		// add items
+		GiveObject(this, o_basin);
 	}
 
 	onAction(a_gonorth)
@@ -171,18 +173,18 @@ extend room r_southwestroom
 
 	override function OnRoomEntered()
 	{
-		textln(identity(this));
-		// TODO: Finish.
+		textln("You are in the Southwest room.");
 	}
 
 	override function OnFirstVisit()
 	{
-		// TODO: Finish.
+		textln("You have a weird feeling that this room may be important.");
 	}
 
 	override function OnLookAround()
 	{
-		// TODO: Finish.
+		textln("The walls are a bright marble. Around the top of the walls, there are bas-relief carvings of snakes, "+
+		"such that each snake seems poised to eat the tail of the snake in front of it.");
 	}
 
 	override function OnReVisit()
@@ -192,7 +194,7 @@ extend room r_southwestroom
 
 	override function OnDirections()
 	{
-		// TODO: Finish.
+		textln("You can go NORTH or EAST from here.");
 	}
 
 }
@@ -201,7 +203,8 @@ extend room r_southroom
 {
 	init()
 	{
-		// add items
+		GiveObject(this, o_jaggedstone);
+		GiveObject(this, o_smoothstone);
 	}
 
 	onAction(a_gowest)
@@ -216,37 +219,40 @@ extend room r_southroom
 
 	override function OnRoomEntered()
 	{
-		textln(identity(this));
-		// TODO: Finish.
+		textln("You are in the southern room.");
 	}
 
 	override function OnFirstVisit()
 	{
-		// TODO: Finish.
+		textln("Uh oh - watch your step!");
 	}
 
 	override function OnLookAround()
 	{
-		// TODO: Finish.
-		Tips.Show(TIP_GOSHORT);
+		textln("For some reason, there was a cave-in here and a bunch of rubble was scattered everywhere.");
+		textln("There's a pool of water here, too.");
 	}
 
 	override function OnReVisit()
 	{
-		// TODO: Finish.
+		textln("You defly navigate the rocky floor.");
 	}
 
 	override function OnDirections()
 	{
-		// TODO: Finish.
+		textln("You can go WEST or EAST from here.");
+		Tips.Show(TIP_GOSHORT);
 	}
+
 }
 
 extend room r_southeastroom
 {
 	init()
 	{
-		// add items
+		GiveObject(this, o_statue);
+		GiveObject(this, o_cup);
+		GiveObject(this, o_ladle);
 	}
 
 	onAction(a_gowest)
@@ -261,28 +267,27 @@ extend room r_southeastroom
 
 	override function OnRoomEntered()
 	{
-		textln(identity(this));
-		// TODO: Finish.
+		textln("You are in the Southeast Room.");
 	}
 
 	override function OnFirstVisit()
 	{
-		// TODO: Finish.
+		textln("GAH! WHAT THE-! Oh. It's a statue of some kind of sagely-looking man.");
 	}
 
 	override function OnLookAround()
 	{
-		// TODO: Finish.
+		textln("You are in stone room with a brick floor.");
 	}
 
 	override function OnReVisit()
 	{
-		// TODO: Finish.
+		textln("You say hello and wave to the petrified man.");
 	}
 
 	override function OnDirections()
 	{
-		// TODO: Finish.
+		textln("You can go WEST or NORTH from here.");
 	}
 }
 
@@ -290,12 +295,17 @@ extend room r_eastroom
 {
 	init()
 	{
-		// add items
+		GiveObject(this, o_insets);
+		GiveObject(this, o_prisms);
+		GiveObject(this, o_magentaeyedoor);
 	}
 
 	onAction(a_gonorth)
 	{
-		SetRoom(player, r_northeastroom);
+		if (HasObject(this, o_magentaeyedoor))
+			p_main.CantGo();
+		else
+			SetRoom(player, r_northeastroom);
 	}
 
 	onAction(a_gosouth)
@@ -305,28 +315,32 @@ extend room r_eastroom
 
 	override function OnRoomEntered()
 	{
-		textln(identity(this));
-		// TODO: Finish.
+		textln("You enter the eastern room.");
 	}
 
 	override function OnFirstVisit()
 	{
-		// TODO: Finish.
+		textln("Now this is strange (well, stranger than what you've seen before? probably not) - "+
+		"there's some kind of contrived contraption, here!");
 	}
 
 	override function OnLookAround()
 	{
-		// TODO: Finish.
+		textln("Maybe somebody set this up because they too were lost? Oh who are you kidding - "+
+		"this is another dumb puzzle.");
 	}
 
 	override function OnReVisit()
 	{
-		// TODO: Finish.
+		textln("You know, with the stands and prisms and such.");
 	}
 
 	override function OnDirections()
 	{
-		// TODO: Finish.
+		if (HasObject(this, o_magentaeyedoor))
+			textln("You can go SOUTH from here, but the NORTH is blocked by a door.");
+		else
+			textln("You can go NORTH or SOUTH from here.");
 	}
 }
 
@@ -334,12 +348,16 @@ extend room r_northeastroom
 {
 	init()
 	{
-		// add items
+		GiveObject(this, o_stonestatue);
+		GiveObject(this, o_stonedoor);
 	}
 
 	onAction(a_gowest)
 	{
-		SetRoom(player, r_northroom);
+		if (HasObject(this, o_stonedoor))
+			p_main.CantGo();
+		else
+			SetRoom(player, r_northroom);
 	}
 
 	onAction(a_gosouth)
@@ -349,42 +367,52 @@ extend room r_northeastroom
 
 	override function OnRoomEntered()
 	{
-		textln(identity(this));
-		// TODO: Finish.
+		textln("You are in the northeast room.");
 	}
 
 	override function OnFirstVisit()
 	{
-		// TODO: Finish.
+		textln("Aw crap - more weird statues.");
 	}
 
 	override function OnLookAround()
 	{
-		// TODO: Finish.
+		textln("It's a regular stone room with a dirt floor. Whoever made this dungeon is running out of ideas.");
 	}
 
 	override function OnReVisit()
 	{
-		// TODO: Finish.
+		// Nothing.
 	}
 
 	override function OnDirections()
 	{
-		// TODO: Finish.
+		if (HasObject(this, o_stonedoor))
+			textln("You can go SOUTH from here - a door is blocking the way WEST.");
+		else
+			textln("You can go WEST or SOUTH from here.");
 	}
+
 }
 
 extend room r_northroom
 {
 	init()
 	{
-		// add items
+		GiveObject(this, o_pedestal);
 	}
 
 	onAction(a_gowest)
 	{
-		SetRoom(player, r_northwestroom);
-		world.cycled = true;
+		if (!HasObject(this, o_portal))
+			p_main.CantGo();
+		else 
+		{
+			textln("You gird your loins as much as loins can be girded, and step through the portal.");
+			pause();
+			SetRoom(player, r_northwestroom);
+			world.cycled = true;
+		}
 	}
 
 	onAction(a_goeast)
@@ -394,27 +422,30 @@ extend room r_northroom
 
 	override function OnRoomEntered()
 	{
-		textln(identity(this));
-		// TODO: Finish.
+		textln("You are in the northeast room.");
 	}
 
 	override function OnFirstVisit()
 	{
-		// TODO: Finish.
+		textln("Oh wow - this is new.");
 	}
 
 	override function OnLookAround()
 	{
-		// TODO: Finish.
+		textln("The room's walls are covered ceiling to floor with maps of varying age and accuracy. " +
+		"Maybe this was some explorer's dungeon.");
 	}
 
 	override function OnReVisit()
 	{
-		// TODO: Finish.
+		// Nothing.
 	}
 
 	override function OnDirections()
 	{
-		// TODO: Finish.
+		if (!HasObject(this, o_portal))
+			textln("You can go WEST or EAST from here.");
+		else
+			textln("You can go EAST from here.");
 	}
 }

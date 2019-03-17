@@ -23,6 +23,45 @@ extend object o_compass
 
 }
 
+action transitive a_turnoff named "turn off", "switch off";
+
+extend object o_flashlight
+{
+	onPlayerBrowse()
+	{
+		if (_examined)
+			textln("A flashlight. Or torch. Whatever.");
+		else
+			textln("A flashlight.");
+	}
+
+	override function OnExamineFirst()
+	{
+		textln("It's a flashlight that doesn't run out of power, and fills another important plot hole - how you can " + 
+		"see in this dark, musty dungeon. Some people call it a \"torch\", though. You don't care, either way.");
+	}
+
+	override function OnExamineNext()
+	{
+		textln("It's your flashlight. Or torch. Whatever.");
+	}
+
+	onAction(a_use)
+	{
+		if (!used)
+			textln("You're always using it. Sometimes you like to pretend you're some kind of Jedi when you wave it around on "+
+			"foggy days. VZZOOOOM! VROWWWWMM!");
+		else
+			textln("It's always active. It's how you can see.");
+		used = true;
+	}
+
+	onAction(a_turnoff)
+	{
+		textln("Don't do that! There might be a grue down here!");
+	}
+}
+
 extend object o_exitdoor
 {
 	onElementBrowse(r_northwestroom)
@@ -271,6 +310,16 @@ extend object o_irondoor
 		textln("There's a big iron door, here.");
 	}
 
+	override function OnExamineEvery()
+	{
+		textln("It's a big, heavy iron door with a tiny keyhole in the center of it.");
+		if (!_examined)
+		{
+			textln("Somebody didn't want you to go this way. Or maybe they did, and they want you to find the key.");
+			textln("Probably the latter.");
+		}
+	}
+
 	onAction(a_take)
 	{
 		textln("You may not have worked out in a while, but even if you did, you don't think you "+
@@ -286,7 +335,8 @@ extend object o_irondoor
 	onActionWith(a_use, o_ironkey)
 	{
 		RemoveObject(o_irondoor);
-		textln("You put the key into the door's keyhole, and it magically vanishes.");
+		RemoveObject(o_ironkey);
+		textln("You put the key into the door's keyhole, and the key and door magically vanish.");
 		textln("You are like, 95% percent sure doors don't do that, but whatever. It's not there, anymore.");
 	}
 
@@ -295,4 +345,543 @@ extend object o_irondoor
 		queue a_use, this;
 	}
 
+}
+
+extend object o_portal
+{
+	onRoomBrowse()
+	{
+		textln("A swirling portal is here, on the west wall.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's the portal that appeared after you put your trusty compass on the pedestal.");
+		textln("Seems foolhardy to not walk through it, don't you think? I mean, you came all this way...");
+	}
+
+	onAction(a_use)
+	{
+		queue a_gowest;
+	}
+}
+
+extend object o_pedestal
+{
+	OnRoomBrowse()
+	{
+		textln("There's a bronze pedestal here, near the west wall of the room.");
+	}
+
+	override function OnExamineFirst()
+	{
+		textln("It's a bronze pedestal that's about waist-high, with a rectangular tablet " + 
+		"on the top, as though it's expecting something to be placed on it.");
+		textln("A plaque on it reads, \"Discard your sense of direction.\"");
+		textln("Who the hell keeps writing these plaques?");
+	}
+
+	override function OnExamineNext()
+	{
+		textln("\"Discard your sense of direction.\"");
+	}
+
+	// "place compass on pedestal"
+	onActionWith(a_placeon, o_compass)
+	{
+		queue a_use, o_pedestal, o_compass;
+	}
+
+	onActionWith(a_use, o_compass)
+	{
+		RemoveObject(o_pedestal);
+		RemoveObject(o_compass);
+		GiveObject(room, o_portal);
+		textln("You place the compass on the pedestal, which starts glowing, and then vanishes, "+
+		"along with your compass. And then, after a flash of light, a churning, swirling portal on "+
+		"the west wall suddenly appears.");
+	}
+
+}
+
+extend object o_basin
+{
+	override init()
+	{
+		inittags();
+		stone = false;
+	}
+
+	OnRoomBrowse()
+	{
+		textln("There's some kind of a basin here in the center of the room.");
+	}
+
+	override function OnExamineFirst()
+	{
+		textln("The basin is made of what looks like ivory, and in the bowl-like cavity is a shimmering liquid.");
+		textln("Is it alabaster? Mercury? Whatever it is, it looks too weird and dangerous to touch, that's for sure.");
+		textln("The ivory, however, does not seem to react to it.");
+	}
+
+	override function OnExamineNext()
+	{
+		textln("It's an ivory basin that contains a weird shimmering liquid.");
+	}
+
+	override onActionWithOther(a_use)
+	{
+		textln("That may be dangerous. You decide against it.");
+	}
+
+	function StoneCheck()
+	{
+		if (stone !== false)
+		{
+			textln("One thing in that basin's enough - let's not push the weird liquid too hard, okay?");
+			return false;
+		}
+		return true;
+	}
+
+	onAction(a_use)
+	{
+		textln("To do what? You should probably use some tools for interacting with this thing. "+
+		"It looks pretty dangerous.");
+	}
+
+	onActionWith(a_use, o_smoothstone)
+	{
+		if (StoneCheck())
+		{
+			RemoveObject(o_smoothstone);
+			stone = identity(o_smoothstone);
+			textln("You drop the smooth stone into the basin. Bye, bye, stone.");
+			textln("Hmm... it looks like the liquid is reacting to it.");
+		}
+	}
+
+	onActionWith(a_use, o_jaggedstone)
+	{
+		if (StoneCheck())
+		{
+			RemoveObject(o_jaggedstone);
+			stone = identity(o_jaggedstone);
+			textln("You drop the jagged stone into the basin. Nice knowing ya, stone.");
+			textln("Hmm... it looks like the liquid is reacting to it.");
+		}
+	}
+
+	onActionWith(a_use, o_cup)
+	{
+		textln("You carefully dip the cup into the liquid. Now you have a cup full of the weird stuff.");
+		RemoveObject(o_cup);
+		GiveObject(player, o_liquidcup);
+	}
+
+	onActionWith(a_use, o_ladle)
+	{
+		textln("You dip the ivory ladle into the basin of weird liquid...");
+		if (stone === identity(o_jaggedstone))
+		{
+			GiveObject(player, o_ruby);
+			textln("...and come up with a ruby! Jackpot! You pocket it after all of the weird liquid drips off of it.");
+			stone = false;
+		}
+		else if (stone === identity(o_smoothstone))
+		{
+			GiveObject(player, o_sapphire);
+			textln("...and come up with a sapphire! Sweet! You pocket it after all of the weird liquid drips off of it.");
+			stone = false;
+		}
+		else
+		{
+			textln("...and come up with nothing. There's nothing in the liquid.");
+		} 
+	}
+
+	onActionWith(a_use, o_ruby)
+	{
+		textln("Nah. It probably had a good enough bath when it was a nondescript stone.");
+	}
+
+	onActionWith(a_use, o_sapphire)
+	{
+		textln("Nah. It probably had a good enough bath when it was a nondescript stone.");
+	}
+
+}
+
+extend object o_cup
+{
+	override Init()
+	{
+		InitTags();
+		filled = false;
+	}
+
+	OnPlayerBrowse()
+	{
+		if (_examined)
+			textln("An ivory cup.");
+		else
+			textln("A cup.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a small cup - looks like it's made of ivory.");
+	}
+
+	override function OnTake()
+	{
+		textln("Looks like he won't be needing this anymore. Yoink!");
+		o_statue.hasCup = false;
+	}
+
+}
+
+extend object o_ladle
+{
+	OnPlayerBrowse()
+	{
+		if (_examined)
+			textln("An ivory ladle.");
+		else
+			textln("A ladle.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a ladle with a short handle, and... holes in it? What good is that?");
+		textln("It's made of ivory, though.");
+	}
+
+	override function OnTake()
+	{
+		textln("You take ladle out of the statue's hand. It was surprisingly easy.");
+		textln("Well, mostly because it can't grab it back.");
+		o_statue.hasLadle = false;
+	}
+
+}
+
+extend object o_statue
+{
+	override Init()
+	{
+		InitTags();
+		hasCup = true;
+		hasLadle = true;
+	}
+
+	OnRoomBrowse()
+	{
+		textln("A statue of a man sitting on a short pedestal is near the eastern wall.");
+		if (hasCup || hasLadle)
+		{
+			if (hasCup)
+				textln("He has a cup in his left hand."); 
+			if (hasLadle)
+				textln("He has a ladle in his right hand."); 
+		}
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a statue of a man sitting, legs folded, on top of a short base about knee-high.");
+		textln("Below him, on the base, a chiseled inscription reads, \"Man Who is Always Thirsty\"");
+		if (!_examined)
+		{
+			textln("Not sure if there's a greater meaning here. Maybe whoever made this dungeon was just "+
+			"trying to make sense of why there's a statue of a man with a cup and ladle. Yeah, that's "+
+			"probably it.");
+		}
+		if (hasCup)
+			textln("He has a cup in his left hand."); 
+		if (hasLadle)
+			textln("He has a ladle in his right hand."); 
+	}
+
+}
+
+extend object o_jaggedstone
+{
+	OnRoomBrowse()
+	{
+		textln("There's a jagged stone on the floor here.");
+	}
+
+	OnPlayerBrowse()
+	{
+		textln("A jagged stone.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a weird, jagged stone. It looks like there's flecks of something red in it.");
+	}
+}
+
+extend object o_smoothstone
+{
+	OnRoomBrowse()
+	{
+		textln("There's a smooth stone in the water here that catches your attention.");
+	}
+
+	OnPlayerBrowse()
+	{
+		textln("A smooth stone.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a cool, smooth stone. It looks like there's flecks of something blue in it.");
+	}
+
+}
+
+extend object o_ruby
+{
+	OnPlayerBrowse()
+	{
+		textln("A ruby.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a dazzlngly red ruby. You wonder how valuable this thing is.");
+	}
+
+}
+
+extend object o_sapphire
+{
+	OnPlayerBrowse()
+	{
+		textln("A sapphire.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a beautifully blue sapphire. You wonder how valuable this thing is.");
+	}
+}
+
+extend object o_magentaeyedoor
+{
+	OnRoomBrowse()
+	{
+		textln("There's a large door with a magenta-colored eye painted on it in the north wall.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a large, stone door with a magenta-colored eye painted on it. It is blocking your way north. Stupid door!");
+	}
+
+	onAction(a_use)
+	{
+		textln("This is probably connected to something else in the room, and cannot be opened directly.");
+	}
+
+	onAction(a_open)
+	{
+		queue a_use, this;
+	}
+
+}
+
+extend object o_insets
+{
+	override Init()
+	{
+		InitTags();
+		hasRuby = false;
+		hasSapphire = false;
+	}
+
+	OnRoomBrowse()
+	{
+		textln("There are a pair of stands in the center of the room, each with some kind of "+
+		"small inset at the tops of them.");
+		if (hasRuby)
+		{
+			textln("A ruby is placed in one of the stands.");
+		}
+		if (hasSapphire)
+		{
+			textln("A sapphire is placed in one of the stands.");
+		}
+
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("The pair of metallic stands sit about a foot away from each other, parallel with the surface of the door.");
+		if (hasRuby)
+		{
+			textln("A ruby is placed in one of the stands.");
+		}
+		if (hasSapphire)
+		{
+			textln("A sapphire is placed in one of the stands.");
+		}
+	}
+
+	onActionWith(a_use, o_ruby)
+	{
+		hasRuby = true;
+		RemoveObject(o_ruby);
+		textln("You put the ruby in one of the insets. It grabs it like a hand. Looks like you "+
+		"aren't getting it back.");
+	}
+
+	onActionWith(a_use, o_sapphire)
+	{
+		hasSapphire = true;
+		RemoveObject(o_sapphire);
+		textln("You put the sapphire in one of the insets. It grabs it like a hand. Looks like you "+
+		"aren't getting it back.");
+	}
+
+}
+
+extend object o_prisms
+{
+	OnRoomBrowse()
+	{
+		textln("A pair of prisms are here.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("The prisms are on stands, equal in height to the other stands in the room, such that "+
+		"if light were shown through them, it would shine across the stands with insets and onto the door "+
+		"on the opposite side.");
+	}
+
+	onActionWith(a_use, o_flashlight)
+	{
+		local ft = o_flashlight._examined ? "flashlight (torch?)" : "flashlight";
+		textln("You shine your " + ft + " at the prisms. The light is refracted and focused "+
+		"such that it passes over the insets on the stands and onto the door.");
+		if (o_insets.hasRuby && o_insets.hasSapphire)
+		{
+			textln("The door is bathed in a magenta color. You hear a rumble, and the door slides "+
+			"into the floor.");
+			RemoveObject(o_magentaeyedoor);
+		}
+		else if (o_insets.hasRuby)
+			textln("The door is bathed in a pale red color, but nothing happens.");
+		else if (o_insets.hasSapphire)
+			textln("The door is bathed in a pale blue color, but nothing happens.");
+		else
+			textln("The door is bathed in white light, but nothing happens.");
+	}
+
+}
+
+action strict reversed ditransitive a_pouron named "pour" uses conjunctions "on";
+
+extend object o_liquidcup
+{
+	OnPlayerBrowse()
+	{
+		textln("A cup filled with weird liquid.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's an ivory cup filled with some kind of liquid that you scooped out of that "+
+		"ivory basin. Careful not to drop it - you don't know what that stuff can do.");
+	}
+
+	onActionWithOther(a_pouron)
+	{
+		textln("That would probably not be a good idea.");
+	}
+
+	override onActionWithOther(a_use)
+	{
+		textln("That would probably not be a good idea.");
+	}
+
+}
+
+extend object o_stonestatue
+{
+	OnRoomBrowse()
+	{
+		textln("A giant stone statue of a snake coiled up and eating its own tail "+
+		"sits in the center of the room.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("The statue is made of stone, but the pedestal its on is ivory.");
+		textln("Engraved in the ivory are the words: \"Help Me Show My True Color\".");
+	}
+
+	onActionWith(a_use, o_liquidcup)
+	{
+		textln("You carefully pour the shimmering liquid over the statue, and it starts to slowly "+
+		"turn an emerald green. The big stone door slides into the floor revealing the way forward.");
+		RemoveObject(o_stonedoor);
+		RemoveObject(o_stonestatue);
+		GiveObject(room, o_emeraldstatue);
+		RemoveObject(o_liquidcup);
+		GiveObject(player, o_cup);
+	}
+
+	onActionWith(a_pouron, o_liquidcup)
+	{
+		queue a_use, o_stonestatue, o_liquidcup;
+	}
+
+}
+
+extend object o_emeraldstatue
+{
+	OnRoomBrowse()
+	{
+		textln("A giant emerald statue of a snake coiled up and eating its own tail "+
+		"sits in the center of the room.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("The statue that was once stone is now emerald.");
+	}
+
+	onAction(a_take)
+	{
+		textln("It'd fetch a pretty penny on the market, but good luck lugging this thing out of here.");
+	}
+
+	onActionWith(a_pouron, o_liquidcup)
+	{
+		queue a_use, o_emeraldstatue, o_liquidcup;
+	}
+
+	onActionWith(a_use, o_liquidcup)
+	{
+		textln("It's probably had enough.");
+	}
+
+}
+
+extend object o_stonedoor
+{
+	OnRoomBrowse()
+	{
+		textln("A big stone door blocks the way west.");
+	}
+
+	override function OnExamineEvery()
+	{
+		textln("It's a big honkin' stone door. The kind of honkin' stone doors that block ways. "+
+		"YOUR way, as a matter of fact.");
+	}
 }

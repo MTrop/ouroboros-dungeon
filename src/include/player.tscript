@@ -7,18 +7,13 @@ player p_main
 	init()
 	{
 		GiveObject(this, o_compass);
+		GiveObject(this, o_flashlight);
 	}
 
 	onAction(a_inventory)
 	{
 		textln("You examine your belongings....");
 		browse(this);
-	}
-
-	onAction(a_takeall)
-	{
-		textln("You search for stuff you can take...");
-		queue a_take : room, "takeable";
 	}
 
 	function CantGo()

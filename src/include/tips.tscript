@@ -8,7 +8,8 @@
 #define TIP_LOOKAT 3
 #define TIP_GO 4
 #define TIP_GOSHORT 5
-#define COUNT_TIP 6
+#define TIP_USE 6
+#define COUNT_TIP 7
 
 container Tips
 {
@@ -21,7 +22,8 @@ container Tips
 			"You seem to have been here before! You will have to \"LOOK AROUND\" to re-examine your surroundings.",
 			"You can \"EXAMINE\" things more closely for a better description.",
 			"To move around, type \"GO\" and a compass direction.",
-			"If you're sick of typing \"GO EAST\" or whatever, you can just type \"N\", \"S\", \"E\", or \"W\" to go that direction."
+			"If you're sick of typing \"GO EAST\" or whatever, you can just type \"N\", \"S\", \"E\", or \"W\" to go that direction.",
+			"You can USE items or USE them WITH things. Try it!"
 		];
 	}
 

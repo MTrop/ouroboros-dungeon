@@ -40,8 +40,18 @@ world
 	onAction(a_realcheat)
 	{
 		textln("You have EVERYTHING!");
-		// TODO: Finish this.
+		GiveObject(player, o_ironkey);
+		GiveObject(player, o_exitkey);
+		GiveObject(player, o_cup);
+		GiveObject(player, o_ladle);
+		GiveObject(player, o_smoothstone);
+		GiveObject(player, o_jaggedstone);
 		browse(player);
+	}
+
+	onAction(a_whatis)
+	{
+		textln("Now's not the time for wondering aloud - you've got a dungeon to escape!");
 	}
 
 	start()

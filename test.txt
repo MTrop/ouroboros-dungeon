@@ -1,0 +1,11 @@
+
+
+s
+u slab
+n
+t key
+s
+u key with door
+s
+e
+!quit

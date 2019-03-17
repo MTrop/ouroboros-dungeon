@@ -38,7 +38,6 @@ room archetype r_allrooms
 	{
 		OnLookAround();
 		Browse(room);
-		textln("");
 		OnDirections();
 	}
 
@@ -58,6 +57,7 @@ room archetype r_allrooms
 		else
 		{
 			OnReVisit();			
+			OnDirections();
 		}
 		_visited = true;
 	}
@@ -198,4 +198,76 @@ object o_ironkey : o_takeable
 
 object o_irondoor : o_examineable
 	named "iron door", "door"
+	uses determiners "the";
+
+object o_pedestal : o_examineable
+	named "pedestal", "bronze pedestal"
+	uses determiners "the";
+
+object o_portal : o_examineable
+	named "portal", "swirling portal"
+	uses determiners "the";
+
+object o_flashlight : o_examineable
+	named "flashlight", "torch"
+	uses determiners "the";
+
+object o_basin : o_examineable
+	named "basin", "ivory basin"
+	uses determiners "the";
+
+object o_statue : o_examineable
+	named "statue", "statue of a man", "man statue", "man"
+	uses determiners "the";
+
+object o_cup : o_takeable
+	named "cup", "ivory cup"
+	uses determiners "the";
+
+object o_liquidcup : o_takeable
+	named "cup", "cup with liquid", "ivory cup", "ivory cup with liquid"
+	uses determiners "the";
+
+object o_ladle : o_takeable
+	named "ladle", "ivory ladle"
+	uses determiners "the";
+
+object o_smoothstone : o_takeable
+	named "stone", "smooth stone"
+	uses determiners "the";
+
+object o_jaggedstone : o_takeable
+	named "stone", "jagged stone"
+	uses determiners "the";
+
+object o_ruby : o_takeable
+	named "ruby", "red stone", "gem", "red gem", "stone"
+	uses determiners "the";
+
+object o_sapphire : o_takeable
+	named "sapphire", "blue stone", "gem", "blue gem", "stone"
+	uses determiners "the";
+
+object o_magentaeyedoor : o_examineable
+	named "magenta eye door", "eye door", "door"
+	uses determiners "the";
+
+object o_insets : o_examineable
+	named "insets", "socket insets", "stands", "stand", "inset", "pair of stands"
+	uses determiners "the";
+
+object o_prisms : o_examineable
+	named "prisms", "pair of prisms"
+	uses determiners "the";
+
+object o_stonestatue : o_examineable
+	named "stone statue", "statue", "snake statue", "ouroboros statue", "ouroboros"
+	uses determiners "the";
+
+object o_emeraldstatue : o_examineable
+	named "emerald ouroboros statue", "emerald snake statue", "emerald statue", "statue", "snake statue", "ouroboros statue", "ouroboros"
+	uses determiners "the";
+
+object o_stonedoor : o_examineable
+	named "stone door", "door"
 	uses determiners "the";
