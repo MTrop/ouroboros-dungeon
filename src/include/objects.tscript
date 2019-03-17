@@ -124,7 +124,7 @@ extend object o_exitdoorkeyhole
 {
 	override function OnExamineFirst()
 	{
-		textln("You peer through the keyhole. Hey - there's light through there! This must be the door to the outside!");
+		textln("You peer through the keyhole. Hey - there's some sunlight being cast in the hallway through there! This must be the door to the outside!");
 	}
 
 	override function OnExamineNext()
