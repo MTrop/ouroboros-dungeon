@@ -1,6 +1,0 @@
-- Transmuting Pool that transmutes things. Needs an ivory ladle.
-	> Sparkling rock - ruby
-	> Smooth rock - sapphire
-
-- Put gems in stands, Shine flashlight though them to an eye that wants magenta light.
-- Get some kind of marble cup to get transmute liquid to pour on a stone statue to turn it into emerald.
