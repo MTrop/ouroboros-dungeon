@@ -8,25 +8,25 @@ room archetype r_allrooms
 	function OnRoomEntered()
 	{
 		// Override me.
-		textln(strformat("[ENTERED [0]]", [identity(this)]));
+		textln(strparam("[ENTERED [0]]", [identity(this)]));
 	}
 
 	function OnLookAround()
 	{
 		// Override me.
-		textln(strformat("[IT LOOKS LIKE [0]]", [identity(this)]));
+		textln(strparam("[IT LOOKS LIKE [0]]", [identity(this)]));
 	}
 
 	function OnFirstVisit()
 	{
 		// Override me.
-		textln(strformat("[FIRST VISIT [0]]", [identity(this)]));
+		textln(strparam("[FIRST VISIT [0]]", [identity(this)]));
 	}
 
 	function OnReVisit()
 	{
 		// Override me.
-		textln(strformat("[RE-VISIT [0]]", [identity(this)]));
+		textln(strparam("[RE-VISIT [0]]", [identity(this)]));
 	}
 
 	function OnDirections()
@@ -93,7 +93,7 @@ object archetype o_allobjects
 
 	onActionWithOther(a_use)
 	{
-		textln("You can't use those things together.");
+		... "You can't use those things together.";
 	}
 
 }

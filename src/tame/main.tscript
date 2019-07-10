@@ -51,7 +51,7 @@ world
 
 	onAction(a_whatis)
 	{
-		textln("Now's not the time for wondering aloud - you've got a dungeon to escape!");
+		... "Now's not the time for wondering aloud - you've got a dungeon to escape!";
 	}
 
 	start()

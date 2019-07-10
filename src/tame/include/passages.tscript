@@ -6,72 +6,66 @@ container Passages
 {
 	function IntroSplash()
 	{
-		textln(strformat("\"[0]\" by [1] ([2])", [header("title"), header("author"), header("twitter")]));
-		textln("Made with TAME (https://tame-if.com) for Train Jam 2019");
-		textln("");
+		... "\"{0}\" by {1} ({2})", [header("title"), header("author"), header("twitter")];
+		... "Made with TAME (https://tame-if.com) for Train Jam 2019";
+		... "";
 		pause();
-		textln("");
+		... "";
 	}
 
 	function IntroText()
 	{
-		textln(
-			"You are exploring a forest at night, as you, the protagonist of the story, "+
-			"are wont to do, because the narrative says so."
-		);
-		textln(
-			"A few moments into your wonton traipse, however, you hear some snapping of twigs "+
-			"that you probably did not do, yourself.\n"
-		);
+		... `You are exploring a forest at night, as you, the protagonist of the story,
+			are wont to do, because the narrative says so.`;
+		... "";
+		... `A few moments into your wonton traipse, however, you hear some snapping of twigs
+			that you probably did not do, yourself.`;
+		... "";
 		pause();
-		textln(
-			"You whirl around to cast some light on who or what is following you (literally, "+
-			"because you have a flashlight, and figuratively, because the author of this tale thought "+
-			"it was clever to write) when the dirt underneath you suddenly gives way, and you tumble into "+
-			"darkness, rocks and roots taking swipes at you as fall towards uncertainty.\n"
-		);
+		... `You whirl around to cast some light on who or what is following you (literally,
+			because you have a flashlight, and figuratively, because the author of this tale thought
+			it was clever to write) when the dirt underneath you suddenly gives way, and you tumble into
+			darkness, rocks and roots taking swipes at you as fall towards uncertainty.`;
+		... "";
 		pause();
-		textln("*THUD*\n");
+		... "*THUD*";
+		... "";
 		pause();
-		textln("Ow. Well, you're not dead. You're definitely lost, though. Who knows how long you've been out cold?\n\n");
+		... "Ow. Well, you're not dead. You're definitely lost, though. Who knows how long you've been out cold?";
+		... "";
 		pause();
 		addCue("clear","");
 	}
 
 	function BackToStart()
 	{
-		textln("Wait, what? WHAAAAT?");
-		textln("Are you KIDDING ME?");
-		textln("You mean you went all this way for some fetch quests and now you're back HERE?");
-		textln("What the HELL, MAN?!");
-		textln("The whole thing's a damn circle! How the hell will you EVER get out, now?!");
-		textln("...");
-		textln("You feel like PUNCHing something....");
+		... "Wait, what? WHAAAAT?";
+		... "Are you KIDDING ME?";
+		... "You mean you went all this way for some fetch quests and now you're back HERE?";
+		... "What the HELL, MAN?!";
+		... "The whole thing's a damn circle! How the hell will you EVER get out, now?!";
+		... "...";
+		... "You feel like PUNCHing something....";
 	}
 
 	function YouWin()
 	{
-		textln("You unlock the door, and, using all of your might, pull it open, revealng a stone hall "+
-		"that is bathed in morning light. You walk to the end of it to find yourself on the outside, the sun "+
-		"just starting to rise.\n");
-		textln(
-			"Maybe this is your metaphorical start of a new day. Maybe this experience has taught you "+
-			"a thing or two about how the destination is not important, but what you find along the way.\n"
-		);
-		textln("Or maybe, just maybe...");
+		... `You unlock the door, and, using all of your might, pull it open, revealng a stone hall
+			that is bathed in morning light. You walk to the end of it to find yourself on the outside, the sun
+			just starting to rise`;
+		... "";
+		... `Maybe this is your metaphorical start of a new day. Maybe this experience has taught you
+			a thing or two about how the destination is not important, but what you find along the way.`;
+		... `Or maybe, just maybe...`;
+		... "";
 		pause();
-		textln(
-			"This whole damn thing was a waste of time and this was a hastily-assembled adventure because "+
-			"none of this junk made sense and whoever made it just needed to get something done in a short "+
-			"amount of time.\n"
-		);
+		... `This whole damn thing was a waste of time and this was a hastily-assembled adventure because
+			none of this junk made sense and whoever made it just needed to get something done in a short
+			amount of time.`;
+		... "";
 		pause();
-		textln(
-			"Oh well. It's not really the author's say, is it?\n"
-		);
-		textln(
-			"Thanks for playing."
-		);
+		... "Oh well. It's not really the author's say, is it?";
+		... "Thanks for playing.";
 	}
 
 }

@@ -32,7 +32,7 @@ container Tips
 		if (tip_seen[id])
 			return false;
 		tip_seen[id] = true;
-		textln("(TIP: " + tip_list[id] + ")");
+		... "(TIP: {0})", tip_list[id];
 	}
 
 }

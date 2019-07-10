@@ -183,7 +183,7 @@ let cueHandler =
 	 */
 	"onFormatText": function(text, accum)
 	{
-		// Blank
+		accum.push(text);
 	}
 	
 };

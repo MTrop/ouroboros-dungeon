@@ -12,13 +12,13 @@ player p_main
 
 	onAction(a_inventory)
 	{
-		textln("You examine your belongings....");
+		... "You examine your belongings....";
 		browse(this);
 	}
 
 	function CantGo()
 	{
-		textln("You can't go that way.");
+		... "You can't go that way.";
 	}
 
 	onUnhandledAction(a_gonorth)
@@ -45,87 +45,87 @@ player p_main
 	{
 		local x = irandom(3);
 		if (x == 0)
-			textln("That could mess up your knuckles.");
+			... "That could mess up your knuckles.";
 		else if (x == 1)
-			textln("Probably not a good idea.");
+			... "Probably not a good idea.";
 		else if (x == 2)
-			textln("That'll probably hurt.");
+			... "That'll probably hurt.";
 	}
 
 	onUnhandledAction()
 	{
 		local x = irandom(3);
 		if (x == 0)
-			textln("You can't do that.");
+			... "You can't do that.";
 		else if (x == 1)
-			textln("That wouldn't be productive.");
+			... "That wouldn't be productive.";
 		else if (x == 2)
-			textln("Nope, can't do that.");
+			... "Nope, can't do that.";
 	}
 
 	onIncompleteCommand(a_take)
 	{
-		textln("WHAT should you take?");
+		... "WHAT should you take?";
 	}
 
 	onIncompleteCommand(a_examine)
 	{
-		textln("WHAT should you examine?");
+		... "WHAT should you examine?";
 	}
 
 	onIncompleteCommand(a_open)
 	{
-		textln("WHAT should you open?");
+		... "WHAT should you open?";
 	}
 
 	onIncompleteCommand(a_use)
 	{
-		textln("WHAT should you use (and optionally, WITH what)?");
+		... "WHAT should you use (and optionally, WITH what)?";
 	}
 
 	onIncompleteCommand()
 	{
-		textln("(You need to be a little more pointed with your commands.)");
+		... "(You need to be a little more pointed with your commands.)";
 	}
 
 	OnMalformedCommand(a_ask)
 	{
-		textln("That is not a thing you can ask someone about.");
+		... "That is not a thing you can ask someone about.";
 	}
 
 	OnMalformedCommand(a_take)
 	{
-		textln("That is not a thing you can take.");
+		... "That is not a thing you can take.";
 	}
 
 	OnMalformedCommand(a_examine)
 	{
-		textln("That is not a thing you can examine.");
+		... "That is not a thing you can examine.";
 	}
 
 	OnMalformedCommand(a_open)
 	{
-		textln("That is not a thing you can open.");
+		... "That is not a thing you can open.";
 	}
 
 	OnMalformedCommand(a_use)
 	{
-		textln("That is not a thing you can use, or use with another thing.");
+		... "That is not a thing you can use, or use with another thing.";
 	}
 
 	OnMalformedCommand()
 	{
-		textln("That does not seem to be possible.");
+		... "That does not seem to be possible.";
 	}
 
 	onAmbiguousCommand()
 	{
-		textln("(There are many things here that can be described that way. Be more specific.)");
+		... "(There are many things here that can be described that way. Be more specific.)";
 	}
 
 	onUnknownCommand()
 	{
-		textln("That is not a thing you can do.");
+		... "That is not a thing you can do.";
 	}
 
 }
