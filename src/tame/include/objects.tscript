@@ -269,7 +269,7 @@ extend object o_ironkey
 
 }
 
-action transitive a_stepon named "step on";
+action transitive a_stepon named "step on", "press";
 
 extend object o_floorplate
 {
@@ -705,33 +705,30 @@ extend object o_insets
 		hasRuby = false;
 		hasSapphire = false;
 	}
+	
+	function Stones()
+	{
+		if (hasRuby)
+		{
+			... "A ruby is placed in one of the stands.";
+		}
+		if (hasSapphire)
+		{
+			... "A sapphire is placed in one of the stands.";
+		}
+	}
 
 	OnRoomBrowse()
 	{
 		... `There are a pair of stands in the center of the room, each with some kind of
 			small inset at the tops of them.`;
-		if (hasRuby)
-		{
-			... "A ruby is placed in one of the stands.";
-		}
-		if (hasSapphire)
-		{
-			... "A sapphire is placed in one of the stands.";
-		}
-
+		Stones();
 	}
 
 	override function OnExamineEvery()
 	{
 		... "The pair of metallic stands sit about a foot away from each other, parallel with the surface of the door.";
-		if (hasRuby)
-		{
-			... "A ruby is placed in one of the stands.";
-		}
-		if (hasSapphire)
-		{
-			... "A sapphire is placed in one of the stands.";
-		}
+		Stones();
 	}
 
 	onActionWith(a_use, o_ruby)

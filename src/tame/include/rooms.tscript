@@ -39,12 +39,12 @@ extend room r_northwestroom
 
 	override function OnRoomEntered()
 	{
-		textln("You are in the starting room.\n");
+		... "You are in the starting room.\n";
 		if (world.cycled && !blurb)
 		{
 			blurb = true;
 			wait(1000);
-			textln("...");
+			... "...";
 			wait(1000);
 			Passages.BackToStart();
 		}
@@ -53,21 +53,16 @@ extend room r_northwestroom
 
 	override function OnFirstVisit()
 	{
-		textln(
-			"Ugh. You're really sore from the fall. Who the heck puts a makeshift " +
-			"dungeon all the way out here, anyway? That lingering mildewy small doesn't " +
-			"help things, either."
-		);
+		... `Ugh. You're really sore from the fall. Who the heck puts a makeshift
+			dungeon all the way out here, anyway? That lingering mildewy small doesn't
+			help things, either.`;
 	}
 
 	override function OnLookAround()
 	{
-		textln(
-			"The room is cramped and damp. It must not have been exposed to " +
-			"the outside world in quite a while."
-		);
-		textln("....Well, until YOU came along at least!");
-		textln("");
+		... `The room is cramped and damp. It must not have been exposed to the outside world in quite a while.`;
+		... "....Well, until YOU came along at least!";
+		... "";
 		Tips.Show(TIP_LOOKAT);
 	}
 
@@ -80,7 +75,7 @@ extend room r_northwestroom
 
 	override function OnDirections()
 	{
-		textln("It looks like you can GO SOUTH from here.");
+		... "It looks like you can GO SOUTH from here.";
 		Tips.Show(TIP_GO);
 	}
 
@@ -122,34 +117,34 @@ extend room r_westroom
 
 	override function OnRoomEntered()
 	{
-		textln("You are in the west room.");
+		... "You are in the west room.";
 	}
 
 	override function OnFirstVisit()
 	{
-		textln("It's kinda chilly in here.");
+		... "It's kinda chilly in here.";
 	}
 
 	override function OnLookAround()
 	{
 		if (HasObject(this, o_irondoor))
-			textln("It's a pretty bare room, save for a single iron door.");
+			... "It's a pretty bare room, save for a single iron door.";
 		else
-			textln("It's a pretty bare room, save for the iron door, which is not there, anymore.");
+			... "It's a pretty bare room, save for the iron door, which is not there, anymore.";
 		Tips.Show(TIP_USE);
 	}
 
 	override function OnReVisit()
 	{
-		textln("It's still kinda chilly in here.");
+		... "It's still kinda chilly in here.";
 	}
 
 	override function OnDirections()
 	{
 		if (HasObject(this, o_irondoor))
-			textln("You can GO NORTH from here. An iron door blocks the way south.");
+			... "You can GO NORTH from here. An iron door blocks the way south.";
 		else
-			textln("You can GO NORTH or SOUTH from here.");
+			... "You can GO NORTH or SOUTH from here.";
 	}
 
 }
@@ -173,18 +168,18 @@ extend room r_southwestroom
 
 	override function OnRoomEntered()
 	{
-		textln("You are in the Southwest room.");
+		... "You are in the Southwest room.";
 	}
 
 	override function OnFirstVisit()
 	{
-		textln("You have a weird feeling that this room may be important.");
+		... "You have a weird feeling that this room may be important.";
 	}
 
 	override function OnLookAround()
 	{
-		textln("The walls are a bright marble. Around the top of the walls, there are bas-relief carvings of snakes, "+
-		"such that each snake seems poised to eat the tail of the snake in front of it.");
+		... `The walls are a bright marble. Around the top of the walls, there are bas-relief carvings of snakes,
+			such that each snake seems poised to eat the tail of the snake in front of it.`;
 	}
 
 	override function OnReVisit()
@@ -194,7 +189,7 @@ extend room r_southwestroom
 
 	override function OnDirections()
 	{
-		textln("You can go NORTH or EAST from here.");
+		... "You can go NORTH or EAST from here.";
 	}
 
 }
@@ -219,28 +214,28 @@ extend room r_southroom
 
 	override function OnRoomEntered()
 	{
-		textln("You are in the southern room.");
+		... "You are in the southern room.";
 	}
 
 	override function OnFirstVisit()
 	{
-		textln("Uh oh - watch your step!");
+		... "Uh oh - watch your step!";
 	}
 
 	override function OnLookAround()
 	{
-		textln("For some reason, there was a cave-in here and a bunch of rubble was scattered everywhere.");
-		textln("There's a pool of water here, too.");
+		... "For some reason, there was a cave-in here and a bunch of rubble was scattered everywhere.";
+		... "There's a pool of water here, too.";
 	}
 
 	override function OnReVisit()
 	{
-		textln("You defly navigate the rocky floor.");
+		... "You defly navigate the rocky floor.";
 	}
 
 	override function OnDirections()
 	{
-		textln("You can go WEST or EAST from here.");
+		... "You can go WEST or EAST from here.";
 		Tips.Show(TIP_GOSHORT);
 	}
 
@@ -267,27 +262,27 @@ extend room r_southeastroom
 
 	override function OnRoomEntered()
 	{
-		textln("You are in the Southeast Room.");
+		... "You are in the Southeast Room.";
 	}
 
 	override function OnFirstVisit()
 	{
-		textln("GAH! WHAT THE-! Oh. It's a statue of some kind of sagely-looking man.");
+		... "GAH! WHAT THE-! Oh. It's a statue of some kind of sagely-looking man.";
 	}
 
 	override function OnLookAround()
 	{
-		textln("You are in stone room with a brick floor.");
+		... "You are in stone room with a brick floor.";
 	}
 
 	override function OnReVisit()
 	{
-		textln("You say hello and wave to the petrified man.");
+		... "You say hello and wave to the petrified man.";
 	}
 
 	override function OnDirections()
 	{
-		textln("You can go WEST or NORTH from here.");
+		... "You can go WEST or NORTH from here.";
 	}
 }
 
@@ -315,32 +310,32 @@ extend room r_eastroom
 
 	override function OnRoomEntered()
 	{
-		textln("You enter the eastern room.");
+		... "You enter the eastern room.";
 	}
 
 	override function OnFirstVisit()
 	{
-		textln("Now this is strange (well, stranger than what you've seen before? probably not) - "+
-		"there's some kind of contrived contraption, here!");
+		... `Now this is strange (well, stranger than what you've seen before? probably not) - 
+			there's some kind of contrived contraption, here!`;
 	}
 
 	override function OnLookAround()
 	{
-		textln("Maybe somebody set this up because they too were lost? Oh who are you kidding - "+
-		"this is another dumb puzzle.");
+		... `Maybe somebody set this up because they too were lost? Oh who are you kidding - 
+			this is another dumb puzzle.`;
 	}
 
 	override function OnReVisit()
 	{
-		textln("You know, with the stands and prisms and such.");
+		... "You know, with the stands and prisms and such.";
 	}
 
 	override function OnDirections()
 	{
 		if (HasObject(this, o_magentaeyedoor))
-			textln("You can go SOUTH from here, but the NORTH is blocked by a door.");
+			... "You can go SOUTH from here, but the NORTH is blocked by a door.";
 		else
-			textln("You can go NORTH or SOUTH from here.");
+			... "You can go NORTH or SOUTH from here.";
 	}
 }
 
@@ -367,17 +362,17 @@ extend room r_northeastroom
 
 	override function OnRoomEntered()
 	{
-		textln("You are in the northeast room.");
+		... "You are in the northeast room.";
 	}
 
 	override function OnFirstVisit()
 	{
-		textln("Aw crap - more weird statues.");
+		... "Aw crap - more weird statues.";
 	}
 
 	override function OnLookAround()
 	{
-		textln("It's a regular stone room with a dirt floor. Whoever made this dungeon is running out of ideas.");
+		... "It's a regular stone room with a dirt floor. Whoever made this dungeon is running out of ideas.";
 	}
 
 	override function OnReVisit()
@@ -388,9 +383,9 @@ extend room r_northeastroom
 	override function OnDirections()
 	{
 		if (HasObject(this, o_stonedoor))
-			textln("You can go SOUTH from here - a door is blocking the way WEST.");
+			... "You can go SOUTH from here - a door is blocking the way WEST.";
 		else
-			textln("You can go WEST or SOUTH from here.");
+			... "You can go WEST or SOUTH from here.";
 	}
 
 }
@@ -408,7 +403,7 @@ extend room r_northroom
 			p_main.CantGo();
 		else 
 		{
-			textln("You gird your loins as much as loins can be girded, and step through the portal.");
+			... "You gird your loins as much as loins can be girded, and step through the portal.";
 			pause();
 			SetRoom(player, r_northwestroom);
 			world.cycled = true;
@@ -422,18 +417,18 @@ extend room r_northroom
 
 	override function OnRoomEntered()
 	{
-		textln("You are in the northeast room.");
+		... "You are in the northeast room.";
 	}
 
 	override function OnFirstVisit()
 	{
-		textln("Oh wow - this is new.");
+		... "Oh wow - this is new.";
 	}
 
 	override function OnLookAround()
 	{
-		textln("The room's walls are covered ceiling to floor with maps of varying age and accuracy. " +
-		"Maybe this was some explorer's dungeon.");
+		... `The room's walls are covered ceiling to floor with maps of varying age and accuracy.
+			Maybe this was some explorer's dungeon.`;
 	}
 
 	override function OnReVisit()
@@ -444,8 +439,8 @@ extend room r_northroom
 	override function OnDirections()
 	{
 		if (!HasObject(this, o_portal))
-			textln("You can go WEST or EAST from here.");
+			... "You can go WEST or EAST from here.";
 		else
-			textln("You can go EAST from here.");
+			... "You can go EAST from here.";
 	}
 }

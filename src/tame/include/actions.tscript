@@ -7,7 +7,7 @@ action general a_goeast named "go east", "e";
 action general a_gosouth named "go south", "s";
 action general a_gonorth named "go north", "n";
 
-action transitive a_take named "take", "pick up", "t";
+action transitive a_take named "take", "pick up", "t", "grab", "snatch", "pilfer", "swipe";
 action transitive a_examine named "examine", "look at", "x";
 action transitive a_open named "open", "o";
 action transitive a_pull named "pull", "pull on";
